@@ -1,0 +1,122 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Bingeit - Watch TV Shows Online For Free | Watch Movies Online For Free</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="author" content="Ahmed Reza">
+
+	<!-- Bootstrap CSS & JS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<!-- Fonts & Icons -->
+	<link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Normalize -->
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
+
+	<!-- Custom Stylesheets -->
+	<link href="/static/css/main.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+	<header>
+		<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="/">
+        <strong>Bingeit</strong>
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active left">
+            <a class="nav-link" href="/bingeit/home">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item left">
+            <a class="nav-link" href="/bingeit/show">Shows</a>
+          </li>
+          <li class="nav-item left">
+            <a class="nav-link" href="/bingeit/movies">Movies</a>
+          </li>
+          <li class="nav-item left">
+            <a class="nav-link" href="/bingeit/categories">Categories</a>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item right">
+            <a href="/show" class="nav-link">
+              <i class="fa fa-search search"></i>
+          </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item right">
+            <a href="/accounts/logout" class="nav-link">
+              <button type="button" class="btn btn-main">Sign Out</button>
+            </a>
+          </li>
+          {% else %}
+          <li class="nav-item right">
+            <a href="/accounts/login" class="nav-link">
+              <button type="button" class="btn btn-main">Sign in</button>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+	</header>
+
+
+
+{% block content %}
+{% endblock %}
+
+<!--Footer-->
+	<footer class="page-footer text-center text-md-left pt-4">
+		<hr>
+		<!--Copyright-->
+		<div class="footer-copyright py-3 text-center">
+			<div class="container-fluid">
+				Created By: <a href="https://about.me/ahmed_reza"> Ahmed Reza </a>
+			</div>
+		</div>
+		<!--/.Copyright-->
+	</footer>
+<!--/.Footer-->
+
+<script src="/static/js/choices.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+	</body>
+
+</html>
+
+
