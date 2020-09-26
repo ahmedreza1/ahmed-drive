@@ -8,7 +8,7 @@ urlpatterns = [
 # Basic pages
     path('home/', views.HomeView.as_view()),
 # Folder Model Pages
-    path('folder/create/', views.FolderCreate.as_view(success_url="/ahmed_drive/folder")),
+    path('folder/create/', views.FolderCreate.as_view(success_url="/ahmed_drive/folder"), name='folder-create'),
     path('folder/', views.FolderListView.as_view()),
     path('folder/<int:pk>', views.FolderDetailView.as_view()),
 # Fileshare Model Pages

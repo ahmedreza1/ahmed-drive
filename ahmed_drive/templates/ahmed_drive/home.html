@@ -1,2 +1,66 @@
-<h1>My folders</h1>
-<a href="/ahmed_drive/folder/create" class="btn btn-primary">Create Folder</a>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="section1">
+	<div class="text1">
+		<h1>All your files in one secure location, accesible anywhere.</h1>
+		<p>Ahmed's Drive stores your most important files in one secure location. Access them wherever you need, share and collaborate with friends, family, and coworkers.</p>
+		{% if user.is_authenticated %}
+		<div class="container">
+			<div class="row">
+			    <div class="col-lg-6">
+			  		<a href="/ahmed_drive/folder/create">
+			  			<button type="button" class="btn btn-main">Create Folder</button>
+                    </a>
+			  	</div>
+			  	<div class="col-lg-6">
+			  		<a href="/ahmed_drive/fileshare/create">
+                        <button type="button" class="btn btn-main">Upload File</button>
+                    </a>
+			    </div>
+			</div>
+		</div>
+		{% else %}
+		<a href="/accounts/login">
+            <button type="button" class="btn btn-main">Sign in</button>
+        </a>
+        {% endif %}
+    </div>
+    <img src="https://raw.githubusercontent.com/hammercait/fylo-two-column-layout/9597c64eec3cb785b4a04b31e917204c1622355a/images/illustration-1.svg" alt="people working">
+</div>
+{% if user.is_authenticated %}
+<!-- Folders and files will come Here -->
+<h1>Hello</h1>
+{% else %}
+
+<div class="section2">
+    <div class="background-color">
+        <div class="text2">
+            <h1>Stay productive, wherever you are</h1>
+            <p>Never let location be an issue when accessing your files. Ahmed's Drive has you covered for all your file storage needs.<br><br>
+            Securely share files and folders with friends, family, and colleagues for live collaboration. No email attachments required!. Create Nested folders.</p>
+            <a href="#">See how Fylo works<img src="https://raw.githubusercontent.com/hammercait/fylo-two-column-layout/9597c64eec3cb785b4a04b31e917204c1622355a/images/icon-arrow.svg" alt="tiny arrow"></a>
+            <div class="testimonial">
+                <img src="https://raw.githubusercontent.com/hammercait/fylo-two-column-layout/9597c64eec3cb785b4a04b31e917204c1622355a/images/icon-quotes.svg" alt="quote icon">
+                <p>Ahmed's Drive has improved our team productivity by an order of magnitude. Since making the switch our team has become a well-oiled collaboration machine.</p>
+                <img class="profile-pic" src="https://github.com/hammercait/fylo-two-column-layout/blob/master/images/avatar-testimonial.jpg?raw=true" alt="profile pic">
+                <div class="name">
+                    <h5>Testimonial</h5>
+                    <h6>Founder & CEO, Example</h6>
+                </div>
+            </div>
+        </div>
+        <img src="https://raw.githubusercontent.com/hammercait/fylo-two-column-layout/9597c64eec3cb785b4a04b31e917204c1622355a/images/illustration-2.svg" class="sec2img" alt="people working">
+    </div>
+</div>
+
+
+<div class="section3">
+    <div class="text3">
+        <h2>Get early access today</h2>
+        <p>It only takes a moment to sign up and our free starter tier is extremely generous. If you have any questions, I would be happy to help you.</p>
+    </div>
+    <a href="/accounts/register">Sign Up Now<img src="https://raw.githubusercontent.com/hammercait/fylo-two-column-layout/9597c64eec3cb785b4a04b31e917204c1622355a/images/icon-arrow.svg" alt="tiny arrow"></a>
+</div>
+{% endif %}
+{% endblock %}
