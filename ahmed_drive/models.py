@@ -12,3 +12,11 @@ class Folder(models.Model):
 	cr_date = models.DateTimeField(auto_now_add = True)
 	def __str__(self):
 		return "%s" % self.name
+
+# The FileShare Model (This model is used to build upload and download logic)
+
+class Fileshare(models.Model):
+	folder = models.ForeignKey(Folder, related_name='fildeshare', on_delete=CASCADE, null=True, blank=True)
+	fileupload = models.FileField(null = True)
+	def __str__(self):
+		return "%s" % self.fileupload

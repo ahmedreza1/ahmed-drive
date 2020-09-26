@@ -11,6 +11,8 @@ urlpatterns = [
     path('folder/create/', views.FolderCreate.as_view(success_url="/ahmed_drive/folder")),
     path('folder/', views.FolderListView.as_view()),
     path('folder/<int:pk>', views.FolderDetailView.as_view()),
+# Fileshare Model Pages
+    path('fileshare/create/', views.FileshareCreate.as_view(success_url="/ahmed_drive/fileshare")),
 # Root URL
     path('', RedirectView.as_view(url="home/")), 
 ]

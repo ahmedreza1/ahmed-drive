@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
-from ahmed_drive.models import Folder
+from ahmed_drive.models import Folder, Fileshare
 from . import models
 from django.views.generic.detail import DetailView
 from django.db.models import Q
@@ -45,5 +45,21 @@ class FolderDetailView(DetailView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		folder_subfolder = Folder.objects.filter(parent_id=self.kwargs['pk']).order_by('-id')
+		folder_file = Fileshare.objects.filter(folder_id=self.kwargs['pk']).order_by('-id')
 		context['folder_subfolder'] = folder_subfolder
+		context['folder_file'] = folder_file
 		return context
+
+
+
+#### Pages Related Fileshare Model ####
+@method_decorator(login_required, name="dispatch")    
+class FileshareCreate(CreateView):
+    model = Fileshare
+    fields = ["fileupload"]
+    def formvalid():
+    	if form.is_valid():
+    		form.save()
+    		return redirect('home.html')
+    	else :
+    		return render(request,{'form': form})
