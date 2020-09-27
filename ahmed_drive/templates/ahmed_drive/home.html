@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="section1">
 	<div class="text1">
 		<h1>All your files in one secure location, accesible anywhere.</h1>
@@ -9,9 +8,31 @@
 		<div class="container">
 			<div class="row">
 			    <div class="col-lg-6">
-			  		<a href="/ahmed_drive/folder/create">
-			  			<button type="button" class="btn btn-main">Create Folder</button>
-                    </a>
+			  		<a data-toggle="modal" href="#modal-1">Edit Contact</a>
+
+{% include "ahmed_drive/folder_form.html" %}
+<script type="text/javascript">
+	$(document).ready(function(){
+    $('#modal').on('submit', function(event){
+        event.preventDefault();
+
+        $.ajax({
+            url: '/ahmed_drive/folder_form.html',
+            type: 'POST',
+            // headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            data: $('#modal').serialize(),
+            
+            beforeSend: function () {
+                $("#modal-1").modal("show");
+            },
+            
+            success: function(data) {
+                $('#modal-1 .modal-body').html(data);
+            }
+        });
+    });
+});
+</script>
 			  	</div>
 			  	<div class="col-lg-6">
 			  		<a href="/ahmed_drive/fileshare/create">
@@ -28,9 +49,59 @@
     </div>
     <img src="https://raw.githubusercontent.com/hammercait/fylo-two-column-layout/9597c64eec3cb785b4a04b31e917204c1622355a/images/illustration-1.svg" alt="people working">
 </div>
+<hr class="py-1">
 {% if user.is_authenticated %}
-<!-- Folders and files will come Here -->
-<h1>Hello</h1>
+<!-- First Row [All the Folders]-->
+<div class="container py-5">
+    <h2 class="font-weight-bold mb-2">Your Folders</h2>
+    <p class="font-italic text-muted mb-4">All your folders in one place, create new folders or open existing ones to see sub-folders and files.</p>
+    
+    <div class="row pb-5 mb-4">
+    	{% for Folder in home_folders %}
+    	{% if Folder.parent == false %}
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 py-1">
+            <!-- Card-->
+            <div class="card rounded shadow-sm border-0">
+                <div class="card-body p-4"><img src="https://icons-for-free.com/iconfiles/png/512/folder-131964753094019398.png" alt="" class="img-fluid d-block mx-auto mb-3">
+                    <h5> <a href="#" class="text-dark">{{Folder.name}}</a></h5>
+                    <p class="small text-muted font-italic">{{Folder.cr_date}}</p>
+                    <a href="/ahmed_drive/folder/{{Folder.id}}">
+                    	<button type="button" class="btn btn-main">Open Folder</button>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+<!-- First Row [All the Folders]-->
+<div class="container py-5" style="margin-bottom: 100px;">
+    <h2 class="font-weight-bold mb-2">Your Files</h2>
+    <p class="font-italic text-muted mb-4">These are files that you have stored outside any folder.</p>
+    
+    <div class="row pb-5 mb-4">
+    	{% for Fileshare in home_files %}
+    	{% if Fileshare.folder == false %}
+        <div class="col-lg-3 col-md-6 mb-4 mb-lg-0 py-1">
+            <!-- Card-->
+            <div class="card rounded shadow-sm border-0">
+                <div class="card-body p-4"><img src="https://lh3.googleusercontent.com/proxy/0_dGo61kvCCIwJK3I8fZyQ0Mv_xpd7eG7mz_JASKgdc9QRtYcNEzJZPZhxdQturd9G2Jrn-hQNyfM6ZgdXmX_UCf28JZQC-s5YfIc5xsBc_aj3VNdZ9tcI6WDXsUBBENZfah" alt="" class="img-fluid d-block mx-auto mb-3">
+                    <h5> <a href="{{Fileshare.fileupload.url}}" download>{{Fileshare.fileupload}}</a></h5>
+                    <a href="{{Fileshare.fileupload.url}}" download="bb_WPurosx.jpg">
+                    	<button type="button" class="btn btn-main">Download</button>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
 {% else %}
 
 <div class="section2">

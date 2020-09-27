@@ -16,6 +16,15 @@ from django.http.response import HttpResponseRedirect
 class HomeView(TemplateView):
 	template_name = "ahmed_drive/home.html"
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		user = self.request.user
+		home_folders = Folder.objects.filter(created_by=user).order_by('-cr_date')
+		home_files = Fileshare.objects.filter(uploaded_by=user).order_by('-id')
+		context['home_folders'] = home_folders
+		context['home_files'] = home_files
+		return context
+
 
 #### Pages Related Folder Model ####
 
@@ -23,12 +32,11 @@ class HomeView(TemplateView):
 class FolderCreate(CreateView):
     model = Folder
     fields = ["name", "parent"]
-    def formvalid():
-    	if form.is_valid():
-    		form.save()
-    		return redirect('home.html')
-    	else :
-    		return render(request,{'form': form})
+    def form_valid(self, form):
+    	self.object = form.save()
+    	self.object.created_by = self.request.user
+    	self.object.save()
+    	return HttpResponseRedirect(self.get_success_url())
 
 @method_decorator(login_required, name="dispatch") 
 class FolderListView(ListView):
@@ -56,10 +64,20 @@ class FolderDetailView(DetailView):
 @method_decorator(login_required, name="dispatch")    
 class FileshareCreate(CreateView):
     model = Fileshare
-    fields = ["fileupload"]
-    def formvalid():
-    	if form.is_valid():
-    		form.save()
-    		return redirect('home.html')
-    	else :
-    		return render(request,{'form': form})
+    fields = ["fileupload", "folder"]
+    def form_valid(self, form):
+    	self.object = form.save()
+    	self.object.uploaded_by = self.request.user
+    	self.object.save()
+    	return HttpResponseRedirect(self.get_success_url())
+
+
+@method_decorator(login_required, name="dispatch") 
+class FileshareListView(ListView):
+	model = Fileshare
+	def get_queryset(self):
+		si = self.request.GET.get("si")
+		if si == None:
+			si = ""
+		fileshareList = Fileshare.objects.order_by("-id");
+		return fileshareList
