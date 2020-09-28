@@ -19,11 +19,12 @@ class HomeView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		user = self.request.user
-		home_folders = Folder.objects.filter(created_by=user).order_by('-cr_date')
-		home_files = Fileshare.objects.filter(uploaded_by=user).order_by('-id')
-		context['home_folders'] = home_folders
-		context['home_files'] = home_files
-		return context
+		if user.is_authenticated:
+			home_folders = Folder.objects.filter(created_by_id=user).order_by('-cr_date')
+			home_files = Fileshare.objects.filter(uploaded_by_id=user).order_by('-id')
+			context['home_folders'] = home_folders
+			context['home_files'] = home_files
+			return context
 
 
 #### Pages Related Folder Model ####
